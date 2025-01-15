@@ -1,0 +1,10 @@
+---
+- name: Apply Kubernetes manifests
+  hosts: localhost
+  tasks:
+    - name: Apply Kubernetes manifests
+      community.kubernetes.k8s:
+        kubeconfig: "{{ lookup('env', 'HOME') }}/.kube/config"
+        state: present
+        definition: "{{ lookup('file', 'ecommerce-deployment.yml') }}"
+        namespace: mywebsite

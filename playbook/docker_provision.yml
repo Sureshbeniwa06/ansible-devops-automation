@@ -1,0 +1,24 @@
+---
+- name: Provision Docker containers for local environment
+  hosts: local
+  become: yes
+  tasks:
+    - name: Ensure Docker service is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Pull e-commerce service image
+      community.docker.docker_image:
+        name: suresh202/ebuy
+        tag: latest
+        source: pull
+
+    - name: Run e-commerce container
+      community.docker.docker_container:
+        name: ecommerce-website
+        image: suresh202/ebuy:latest
+        state: started
+        ports:
+          - "82:80"

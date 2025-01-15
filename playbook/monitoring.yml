@@ -1,0 +1,17 @@
+---
+- name: Deploy Prometheus and Grafana on Kubernetes
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Apply Prometheus deployment
+      kubernetes.core.k8s:
+        kubeconfig: /home/suresh/.kube/config
+        state: present
+        definition: "{{ lookup('file', 'prometheus.yml') }}"
+      delegate_to: localhost
+    - name: Apply Grafana deployment
+      kubernetes.core.k8s:
+        kubeconfig: /home/suresh/.kube/config
+        state: present
+        definition: "{{ lookup('file', 'garfana.yml') }}"
+      delegate_to: localhost
