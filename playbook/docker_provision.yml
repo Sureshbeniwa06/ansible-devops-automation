@@ -1,6 +1,6 @@
 ---
 - name: Provision Docker containers for local environment
-  hosts: local
+  hosts: localhost
   become: yes
   tasks:
     - name: Ensure Docker service is running

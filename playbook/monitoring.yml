@@ -2,16 +2,18 @@
 - name: Deploy Prometheus and Grafana on Kubernetes
   hosts: localhost
   become: yes
+  vars:
+    ansible_python_interpreter: "{{ lookup('env', 'HOME') }}/.venv/bin/python"
   tasks:
     - name: Apply Prometheus deployment
       kubernetes.core.k8s:
         kubeconfig: /home/suresh/.kube/config
         state: present
-        definition: "{{ lookup('file', 'prometheus.yml') }}"
+        definition: "{{ lookup('file', '/home/suresh/ansible-devops/monitoring/prometheus.yml') }}"
       delegate_to: localhost
     - name: Apply Grafana deployment
       kubernetes.core.k8s:
         kubeconfig: /home/suresh/.kube/config
         state: present
-        definition: "{{ lookup('file', 'garfana.yml') }}"
+        definition: "{{ lookup('file', '/home/suresh/ansible-devops/monitoring/garfana.yml') }}"
       delegate_to: localhost

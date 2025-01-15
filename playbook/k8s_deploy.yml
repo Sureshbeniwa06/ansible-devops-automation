@@ -1,10 +1,23 @@
 ---
-- name: Apply Kubernetes manifests
+- name: Apply Kubernetes manifests using Minikube
   hosts: localhost
+  vars:
+    ansible_python_interpreter: "{{ lookup('env', 'HOME') }}/.venv/bin/python"  # Virtual environment Python path
   tasks:
-    - name: Apply Kubernetes manifests
-      community.kubernetes.k8s:
+    - name: Ensure the Kubernetes namespace exists
+      kubernetes.core.k8s:
         kubeconfig: "{{ lookup('env', 'HOME') }}/.kube/config"
         state: present
-        definition: "{{ lookup('file', 'ecommerce-deployment.yml') }}"
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: mywebsite
+
+    - name: Apply Kubernetes manifests
+      kubernetes.core.k8s:
+        kubeconfig: "{{ lookup('env', 'HOME') }}/.kube/config"
+        state: present
+        definition: "{{ lookup('file', '/home/suresh/ansible-devops/k8-deployment/ecommerce-deployment.yml') }}"
         namespace: mywebsite
+
