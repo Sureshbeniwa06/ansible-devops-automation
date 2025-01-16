@@ -1,4 +1,4 @@
-#  🚀ansible-k8s-docker-monitoring 🚀
+#  Ansible-k8s-docker-monitoring 🚀
 
 This project provides an automated solution for deploying an e-commerce service using **Ansible**, **Docker**, and **Kubernetes**. It includes provisioning Docker containers, deploying applications on Kubernetes, and setting up monitoring with Prometheus and Grafana.
 
